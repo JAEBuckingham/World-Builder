@@ -40,9 +40,6 @@ class DataBase:
         self.connection = None
         self.session = None
 
-    def new_session(self):
-        return self.connection.new_session()
-
     def new_sqlite_connection(self):
         """get the file path for a new sql db"""
         filename = filedialog.asksaveasfilename(title="New",
@@ -51,12 +48,18 @@ class DataBase:
             if '.db' != filename[-3:]:
                 filename += '.db'
             self.connection = Connection('sqlite', filename)
+            self.session = self.connection.new_session()
 
     def open_sqlite_connection(self):
         """get the file path for a sql db"""
         filename = filedialog.askopenfilename(title="Open", filetypes=(("Database files", "*.db"),))
         if filename:
             self.connection = Connection('sqlite', filename)
+            self.session = self.connection.new_session()
+
+    def commit(self):
+        if self.session:
+            self.session.commit()
 
 
 def character_list(table, session):

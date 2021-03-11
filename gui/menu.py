@@ -30,9 +30,9 @@ class MainWindow(tk.Tk):
         self.menu_bar = MenuBar(self, self.data_base)
         self.config(menu=self.menu_bar, background='light blue')
 
-        self.characters_list = ItemFrame(self, Characters, self.data_base.connection)
-        self.events_list = ItemFrame(self, Events, self.data_base.connection)
-        self.locations_list = ItemFrame(self, Locations, self.data_base.connection)
+        self.characters_list = ItemFrame(self, Characters, self.data_base)
+        self.events_list = ItemFrame(self, Events, self.data_base)
+        self.locations_list = ItemFrame(self, Locations, self.data_base)
 
         self.characters_list.grid(row=0, column=0, sticky='nesw')
         self.events_list.grid(row=0, column=1, sticky='nesw')
@@ -64,6 +64,7 @@ class FileMenu(tk.Menu):
         self.parent = parent
         self.add_command(label="New", command=self.new_sqlite_connection)
         self.add_command(label="Open", command=self.open_sqlite_connection)
+        self.add_command(label="Save", command=self.commit_sesion)
 
     def new_sqlite_connection(self):
         self.data_base.new_sqlite_connection()
@@ -72,6 +73,10 @@ class FileMenu(tk.Menu):
     def open_sqlite_connection(self):
         self.data_base.open_sqlite_connection()
         self.parent.refresh()
+
+    def commit_sesion(self):
+        self.data_base.commit()
+
 
 
 class ItemScroll(tk.Frame):

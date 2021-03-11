@@ -13,11 +13,6 @@ class Character(tk.Toplevel):
         self.name = tk.StringVar()
         self.name_entry = tk.Entry(self, textvariable=self.name)
         self.name_entry.grid(row=0, column=0)
-        self.save_button = tk.Button(self, text='Save', command=self.save)
-        self.save_button.grid(row=0, column=1)
-
-    def save(self):
-        self.session.commit()
 
         # name
         # description
